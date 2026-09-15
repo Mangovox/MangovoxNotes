@@ -1,3 +1,6 @@
 {
-    "@@locale": "ru"
+    "@@locale": "ru",
+    "notes_title": "Заметки",
+    "diary_title": "Ежедневник",
+    "settings_title": "Настройки"
 }

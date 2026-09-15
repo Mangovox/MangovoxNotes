@@ -97,6 +97,24 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('ru'),
   ];
+
+  /// The title for notes page
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes_title;
+
+  /// The title for diary page
+  ///
+  /// In en, this message translates to:
+  /// **'Diary'**
+  String get diary_title;
+
+  /// The title for settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings_title;
 }
 
 class _AppLocalizationsDelegate

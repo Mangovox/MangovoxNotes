@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mangovox_md_notes/core/utils/s.dart';
 import 'package:mangovox_md_notes/presentation/routing/app_routes.dart';
+import 'package:mangovox_md_notes/presentation/widgets/app_icon.dart';
 
 /// A screen that serves as the main entry point of the application, containing a navigation shell.
 class MainScreen extends StatefulWidget {
@@ -86,9 +88,33 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: _onDestinationSelected,
           selectedIndex: widget.navigationShell.currentIndex,
+          indicatorColor: theme.colorScheme.primary,
           destinations: <Widget>[
-
-          ]
+            NavigationDestination(
+              icon: const AppIcon(icon: TablerIcons.notes),
+              selectedIcon: AppIcon(
+                icon: TablerIcons.notes,
+                color: theme.colorScheme.onPrimary,
+              ),
+              label: localizations.notes_title,
+            ),
+            NavigationDestination(
+              icon: const AppIcon(icon: TablerIcons.calendar_event),
+              selectedIcon: AppIcon(
+                icon: TablerIcons.calendar_event,
+                color: theme.colorScheme.onPrimary,
+              ),
+              label: localizations.diary_title,
+            ),
+            NavigationDestination(
+              icon: const AppIcon(icon: TablerIcons.settings),
+              selectedIcon: AppIcon(
+                icon: TablerIcons.settings,
+                color: theme.colorScheme.onPrimary,
+              ),
+              label: localizations.settings_title,
+            ),
+          ],
         ),
       ),
     );

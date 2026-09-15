@@ -1,3 +1,15 @@
 {
-    "@@locale": "en"
+    "@@locale": "en",
+    "notes_title": "Notes",
+    "@notes_title": {
+        "description": "The title for notes page"
+    },
+    "diary_title": "Diary",
+    "@diary_title": {
+        "description": "The title for diary page"
+    },
+    "settings_title": "Settings",
+    "@settings_title": {
+        "description": "The title for settings page"
+    }
 }
