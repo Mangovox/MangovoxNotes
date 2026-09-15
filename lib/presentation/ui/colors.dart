@@ -40,6 +40,14 @@ class ColorsLight {
 
   static const shadow = Color(0xFF000000);
   static const scrim = Color(0xFF000000);
+
+  static const textRed = Color(0xFFDC2626);
+  static const textOrange = Color(0xFFEA580C);
+  static const textYellow = Color(0xFFCA8A04);
+  static const textGreen = Color(0xFF16A34A);
+  static const textBlue = Color(0xFF2563EB);
+  static const textPurple = Color(0xFF9333EA);
+  static const textGray = Color(0xFF6B7280);
 }
 
 /// A utility class for defining the application's dark color palette.
@@ -82,4 +90,12 @@ class ColorsDark {
 
   static const shadow = Color(0xFF000000);
   static const scrim = Color(0xFF000000);
+
+  static const textRed = Color(0xFFF87171);
+  static const textOrange = Color(0xFFFB923C);
+  static const textYellow = Color(0xFFFACC15);
+  static const textGreen = Color(0xFF4ADE80);
+  static const textBlue = Color(0xFF60A5FA);
+  static const textPurple = Color(0xFFC084FC);
+  static const textGray = Color(0xFF9CA3AF);
 }
