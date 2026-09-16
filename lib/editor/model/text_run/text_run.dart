@@ -4,6 +4,8 @@ import 'package:mangovox_md_notes/editor/enums/text_color_token.dart';
 part 'text_run.freezed.dart';
 part 'text_run.g.dart';
 
+
+/// A [TextRun] represents a segment of text with specific formatting attributes.
 @freezed
 abstract class TextRun with _$TextRun {
   const factory TextRun({
