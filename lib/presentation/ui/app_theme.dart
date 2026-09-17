@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mangovox_md_notes/presentation/ui/app_text_theme.dart';
+import 'package:mangovox_md_notes/presentation/ui/color_schemes.dart';
 
 /// A utility class for managing the application's theme.
-/// 
+///
 /// This class provides static methods to retrieve the light and dark themes of the application.
 class AppTheme {
   static TextTheme get textTheme => AppTextTheme.textTheme();
 
   /// Returns the light theme of the application.
   static ThemeData get lightTheme {
-    final scheme = ThemeData.light().colorScheme;
+    final scheme = ColorSchemes.lightScheme();
 
     return ThemeData(
       useMaterial3: true,
@@ -25,7 +26,7 @@ class AppTheme {
 
   /// Returns the dark theme of the application.
   static ThemeData get darkTheme {
-    final scheme = ThemeData.dark().colorScheme;
+    final scheme = ColorSchemes.darkScheme();
 
     return ThemeData(
       useMaterial3: true,

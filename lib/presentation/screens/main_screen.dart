@@ -85,36 +85,72 @@ class _MainScreenState extends State<MainScreen> {
       },
       child: Scaffold(
         body: widget.navigationShell,
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: _onDestinationSelected,
-          selectedIndex: widget.navigationShell.currentIndex,
-          indicatorColor: theme.colorScheme.primary,
-          destinations: <Widget>[
-            NavigationDestination(
-              icon: const AppIcon(icon: TablerIcons.notes),
-              selectedIcon: AppIcon(
-                icon: TablerIcons.notes,
-                color: theme.colorScheme.onPrimary,
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: Colors.transparent,
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            labelTextStyle: WidgetStateProperty.resolveWith((states) {
+              final style = theme.textTheme.labelMedium;
+              if (states.contains(WidgetState.selected)) {
+                return style?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                );
+              }
+              return style?.copyWith(color: theme.colorScheme.onSurfaceVariant);
+            }),
+            iconTheme: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return IconThemeData(
+                  color: theme.colorScheme.primary,
+                  size: 24.0,
+                );
+              }
+              return IconThemeData(
+                color: theme.colorScheme.onSurfaceVariant,
+                size: 24.0,
+              );
+            }),
+          ),
+          child: NavigationBar(
+            onDestinationSelected: _onDestinationSelected,
+            selectedIndex: widget.navigationShell.currentIndex,
+            destinations: <Widget>[
+              NavigationDestination(
+                icon: AppIcon(
+                  icon: TablerIcons.notes,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                selectedIcon: AppIcon(
+                  icon: TablerIcons.notes,
+                  color: theme.colorScheme.primary,
+                ),
+                label: localizations.notes_title,
               ),
-              label: localizations.notes_title,
-            ),
-            NavigationDestination(
-              icon: const AppIcon(icon: TablerIcons.calendar_event),
-              selectedIcon: AppIcon(
-                icon: TablerIcons.calendar_event,
-                color: theme.colorScheme.onPrimary,
+              NavigationDestination(
+                icon: AppIcon(
+                  icon: TablerIcons.calendar_event,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                selectedIcon: AppIcon(
+                  icon: TablerIcons.calendar_event,
+                  color: theme.colorScheme.primary,
+                ),
+                label: localizations.diary_title,
               ),
-              label: localizations.diary_title,
-            ),
-            NavigationDestination(
-              icon: const AppIcon(icon: TablerIcons.settings),
-              selectedIcon: AppIcon(
-                icon: TablerIcons.settings,
-                color: theme.colorScheme.onPrimary,
+              NavigationDestination(
+                icon: AppIcon(
+                  icon: TablerIcons.settings,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                selectedIcon: AppIcon(
+                  icon: TablerIcons.settings,
+                  color: theme.colorScheme.primary,
+                ),
+                label: localizations.settings_title,
               ),
-              label: localizations.settings_title,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

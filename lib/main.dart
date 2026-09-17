@@ -14,8 +14,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 /// The main entry point of the application.
 void main() async {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await di.init();
 
