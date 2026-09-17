@@ -409,6 +409,17 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _previewMeta = const VerificationMeta(
+    'preview',
+  );
+  @override
+  late final GeneratedColumn<String> preview = GeneratedColumn<String>(
+    'preview',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -419,6 +430,7 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
     isDaily,
     dailyDate,
     content,
+    preview,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -485,6 +497,12 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
     } else if (isInserting) {
       context.missing(_contentMeta);
     }
+    if (data.containsKey('preview')) {
+      context.handle(
+        _previewMeta,
+        preview.isAcceptableOrUnknown(data['preview']!, _previewMeta),
+      );
+    }
     return context;
   }
 
@@ -526,6 +544,10 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
         DriftSqlType.string,
         data['${effectivePrefix}content'],
       )!,
+      preview: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}preview'],
+      ),
     );
   }
 
@@ -544,6 +566,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
   final bool isDaily;
   final DateTime? dailyDate;
   final String content;
+  final String? preview;
   const NoteData({
     required this.id,
     required this.title,
@@ -553,6 +576,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
     required this.isDaily,
     this.dailyDate,
     required this.content,
+    this.preview,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -569,6 +593,9 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       map['daily_date'] = Variable<DateTime>(dailyDate);
     }
     map['content'] = Variable<String>(content);
+    if (!nullToAbsent || preview != null) {
+      map['preview'] = Variable<String>(preview);
+    }
     return map;
   }
 
@@ -586,6 +613,9 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           ? const Value.absent()
           : Value(dailyDate),
       content: Value(content),
+      preview: preview == null && nullToAbsent
+          ? const Value.absent()
+          : Value(preview),
     );
   }
 
@@ -603,6 +633,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       isDaily: serializer.fromJson<bool>(json['isDaily']),
       dailyDate: serializer.fromJson<DateTime?>(json['dailyDate']),
       content: serializer.fromJson<String>(json['content']),
+      preview: serializer.fromJson<String?>(json['preview']),
     );
   }
   @override
@@ -617,6 +648,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       'isDaily': serializer.toJson<bool>(isDaily),
       'dailyDate': serializer.toJson<DateTime?>(dailyDate),
       'content': serializer.toJson<String>(content),
+      'preview': serializer.toJson<String?>(preview),
     };
   }
 
@@ -629,6 +661,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
     bool? isDaily,
     Value<DateTime?> dailyDate = const Value.absent(),
     String? content,
+    Value<String?> preview = const Value.absent(),
   }) => NoteData(
     id: id ?? this.id,
     title: title ?? this.title,
@@ -638,6 +671,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
     isDaily: isDaily ?? this.isDaily,
     dailyDate: dailyDate.present ? dailyDate.value : this.dailyDate,
     content: content ?? this.content,
+    preview: preview.present ? preview.value : this.preview,
   );
   NoteData copyWithCompanion(NoteCompanion data) {
     return NoteData(
@@ -649,6 +683,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       isDaily: data.isDaily.present ? data.isDaily.value : this.isDaily,
       dailyDate: data.dailyDate.present ? data.dailyDate.value : this.dailyDate,
       content: data.content.present ? data.content.value : this.content,
+      preview: data.preview.present ? data.preview.value : this.preview,
     );
   }
 
@@ -662,7 +697,8 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           ..write('updatedAt: $updatedAt, ')
           ..write('isDaily: $isDaily, ')
           ..write('dailyDate: $dailyDate, ')
-          ..write('content: $content')
+          ..write('content: $content, ')
+          ..write('preview: $preview')
           ..write(')'))
         .toString();
   }
@@ -677,6 +713,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
     isDaily,
     dailyDate,
     content,
+    preview,
   );
   @override
   bool operator ==(Object other) =>
@@ -689,7 +726,8 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           other.updatedAt == this.updatedAt &&
           other.isDaily == this.isDaily &&
           other.dailyDate == this.dailyDate &&
-          other.content == this.content);
+          other.content == this.content &&
+          other.preview == this.preview);
 }
 
 class NoteCompanion extends UpdateCompanion<NoteData> {
@@ -701,6 +739,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
   final Value<bool> isDaily;
   final Value<DateTime?> dailyDate;
   final Value<String> content;
+  final Value<String?> preview;
   final Value<int> rowid;
   const NoteCompanion({
     this.id = const Value.absent(),
@@ -711,6 +750,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     this.isDaily = const Value.absent(),
     this.dailyDate = const Value.absent(),
     this.content = const Value.absent(),
+    this.preview = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   NoteCompanion.insert({
@@ -722,6 +762,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     this.isDaily = const Value.absent(),
     this.dailyDate = const Value.absent(),
     required String content,
+    this.preview = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        createdAt = Value(createdAt),
@@ -736,6 +777,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     Expression<bool>? isDaily,
     Expression<DateTime>? dailyDate,
     Expression<String>? content,
+    Expression<String>? preview,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -747,6 +789,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
       if (isDaily != null) 'is_daily': isDaily,
       if (dailyDate != null) 'daily_date': dailyDate,
       if (content != null) 'content': content,
+      if (preview != null) 'preview': preview,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -760,6 +803,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     Value<bool>? isDaily,
     Value<DateTime?>? dailyDate,
     Value<String>? content,
+    Value<String?>? preview,
     Value<int>? rowid,
   }) {
     return NoteCompanion(
@@ -771,6 +815,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
       isDaily: isDaily ?? this.isDaily,
       dailyDate: dailyDate ?? this.dailyDate,
       content: content ?? this.content,
+      preview: preview ?? this.preview,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -802,6 +847,9 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     if (content.present) {
       map['content'] = Variable<String>(content.value);
     }
+    if (preview.present) {
+      map['preview'] = Variable<String>(preview.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -819,6 +867,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
           ..write('isDaily: $isDaily, ')
           ..write('dailyDate: $dailyDate, ')
           ..write('content: $content, ')
+          ..write('preview: $preview, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1231,6 +1280,7 @@ typedef $$NoteTableCreateCompanionBuilder =
       Value<bool> isDaily,
       Value<DateTime?> dailyDate,
       required String content,
+      Value<String?> preview,
       Value<int> rowid,
     });
 typedef $$NoteTableUpdateCompanionBuilder =
@@ -1243,6 +1293,7 @@ typedef $$NoteTableUpdateCompanionBuilder =
       Value<bool> isDaily,
       Value<DateTime?> dailyDate,
       Value<String> content,
+      Value<String?> preview,
       Value<int> rowid,
     });
 
@@ -1308,6 +1359,11 @@ class $$NoteTableFilterComposer extends Composer<_$AppDatabase, $NoteTable> {
 
   ColumnFilters<String> get content => $composableBuilder(
     column: $table.content,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get preview => $composableBuilder(
+    column: $table.preview,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1378,6 +1434,11 @@ class $$NoteTableOrderingComposer extends Composer<_$AppDatabase, $NoteTable> {
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get preview => $composableBuilder(
+    column: $table.preview,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$FolderTableOrderingComposer get folderId {
     final $$FolderTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -1431,6 +1492,9 @@ class $$NoteTableAnnotationComposer
 
   GeneratedColumn<String> get content =>
       $composableBuilder(column: $table.content, builder: (column) => column);
+
+  GeneratedColumn<String> get preview =>
+      $composableBuilder(column: $table.preview, builder: (column) => column);
 
   $$FolderTableAnnotationComposer get folderId {
     final $$FolderTableAnnotationComposer composer = $composerBuilder(
@@ -1492,6 +1556,7 @@ class $$NoteTableTableManager
                 Value<bool> isDaily = const Value.absent(),
                 Value<DateTime?> dailyDate = const Value.absent(),
                 Value<String> content = const Value.absent(),
+                Value<String?> preview = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => NoteCompanion(
                 id: id,
@@ -1502,6 +1567,7 @@ class $$NoteTableTableManager
                 isDaily: isDaily,
                 dailyDate: dailyDate,
                 content: content,
+                preview: preview,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -1514,6 +1580,7 @@ class $$NoteTableTableManager
                 Value<bool> isDaily = const Value.absent(),
                 Value<DateTime?> dailyDate = const Value.absent(),
                 required String content,
+                Value<String?> preview = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => NoteCompanion.insert(
                 id: id,
@@ -1524,6 +1591,7 @@ class $$NoteTableTableManager
                 isDaily: isDaily,
                 dailyDate: dailyDate,
                 content: content,
+                preview: preview,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

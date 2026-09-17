@@ -12,10 +12,10 @@ part 'app_database.g.dart';
   daos: [FoldersDao, NotesDao],
 )
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -24,8 +24,15 @@ class AppDatabase extends _$AppDatabase {
 
       await migrator.database.customStatement(
         'CREATE UNIQUE INDEX IF NOT EXISTS idx_notes_daily_date '
-        'ON notes (daily_date) WHERE daily_date IS NOT NULL;',
+        'ON note (daily_date) WHERE daily_date IS NOT NULL;',
       );
+    },
+    onUpgrade: (migrator, from, to) async {
+      if (from < 2) {
+        await migrator.database.customStatement(
+          'ALTER TABLE note ADD COLUMN preview TEXT;',
+        );
+      }
     },
   );
 

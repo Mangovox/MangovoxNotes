@@ -73,6 +73,7 @@ sealed class Node with _$Node {
 
   factory Node.fromJson(Map<String, dynamic> json) => _$NodeFromJson(json);
 
+  @override
   String get id => switch (this) {
     ParagraphNode(id: final v) => v,
     HeadingNode(id: final v) => v,

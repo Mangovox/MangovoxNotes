@@ -12,6 +12,7 @@ class Note extends Table {
   DateTimeColumn get dailyDate => dateTime().nullable()();
 
   TextColumn get content => text()();
+  TextColumn get preview => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};

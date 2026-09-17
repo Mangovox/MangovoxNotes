@@ -4,6 +4,7 @@ import 'package:mangovox_md_notes/core/managers/theme_manager.dart';
 import 'package:mangovox_md_notes/data/data_sources/local/app_database.dart';
 import 'package:mangovox_md_notes/data/data_sources/local/daos/folders/folders_dao.dart';
 import 'package:mangovox_md_notes/data/data_sources/local/daos/notes/notes_dao.dart';
+import 'package:mangovox_md_notes/data/repositories/notes_repository.dart';
 import 'package:mangovox_md_notes/data/services/storage_service.dart';
 
 /// Service locator instance.
@@ -26,5 +27,10 @@ Future<void> init() async {
   getIt.registerLazySingleton<NotesDao>(() => NotesDao(getIt<AppDatabase>()));
   getIt.registerLazySingleton<FoldersDao>(
     () => FoldersDao(getIt<AppDatabase>()),
+  );
+
+  // Repositories
+  getIt.registerLazySingleton<NotesRepository>(
+    () => NotesRepository(getIt<NotesDao>()),
   );
 }
