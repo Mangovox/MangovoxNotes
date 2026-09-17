@@ -4,7 +4,6 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mangovox_md_notes/core/utils/s.dart';
 import 'package:mangovox_md_notes/presentation/routing/app_routes.dart';
-import 'package:mangovox_md_notes/presentation/widgets/app_icon.dart';
 
 /// A screen that serves as the main entry point of the application, containing a navigation shell.
 class MainScreen extends StatefulWidget {
@@ -117,34 +116,34 @@ class _MainScreenState extends State<MainScreen> {
             selectedIndex: widget.navigationShell.currentIndex,
             destinations: <Widget>[
               NavigationDestination(
-                icon: AppIcon(
-                  icon: TablerIcons.notes,
+                icon: Icon(
+                  TablerIcons.notes,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
-                selectedIcon: AppIcon(
-                  icon: TablerIcons.notes,
+                selectedIcon: Icon(
+                  TablerIcons.notes,
                   color: theme.colorScheme.primary,
                 ),
                 label: localizations.notes_title,
               ),
               NavigationDestination(
-                icon: AppIcon(
-                  icon: TablerIcons.calendar_event,
+                icon: Icon(
+                  TablerIcons.calendar_event,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
-                selectedIcon: AppIcon(
-                  icon: TablerIcons.calendar_event,
+                selectedIcon: Icon(
+                  TablerIcons.calendar_event,
                   color: theme.colorScheme.primary,
                 ),
                 label: localizations.diary_title,
               ),
               NavigationDestination(
-                icon: AppIcon(
-                  icon: TablerIcons.settings,
+                icon: Icon(
+                  TablerIcons.settings,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
-                selectedIcon: AppIcon(
-                  icon: TablerIcons.settings,
+                selectedIcon: Icon(
+                  TablerIcons.settings,
                   color: theme.colorScheme.primary,
                 ),
                 label: localizations.settings_title,
