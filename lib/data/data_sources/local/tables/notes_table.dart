@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:mangovox_md_notes/data/data_sources/local/tables/folders_table.dart';
 
-class Notes extends Table {
+class Note extends Table {
   TextColumn get id => text()();
   TextColumn get title => text().withDefault(const Constant(''))();
-  TextColumn get folderId => text().nullable().references(Folders, #id)();
+  TextColumn get folderId => text().nullable().references(Folder, #id)();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
   BoolColumn get isDaily => boolean().withDefault(const Constant(false))();
