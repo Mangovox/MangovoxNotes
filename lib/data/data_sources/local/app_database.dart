@@ -7,10 +7,7 @@ import 'package:mangovox_md_notes/data/data_sources/local/tables/notes_table.dar
 
 part 'app_database.g.dart';
 
-@DriftDatabase(
-  tables: [Folder, Note],
-  daos: [FoldersDao, NotesDao],
-)
+@DriftDatabase(tables: [Folder, Note], daos: [FoldersDao, NotesDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
